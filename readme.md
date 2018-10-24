@@ -14,5 +14,7 @@
 - composer self-update
 - composer insert
 - создать файл .env из .env example 
-- перезапустить сервер 
+- перезапустить сервер (переименовать localhost)
 - HTTP://demo 
+
+добавлена новая ветка user
