@@ -16,5 +16,7 @@
 - создать файл .env из .env example 
 - перезапустить сервер 
 - HTTP://demo 
-- перезапустить сервер (переименовать localhost)
-- HTTP://demo 
+- создать БД с именем как и проект
+- подключить БД в файле .env .env example
+- выполнить миграции либо export 
+- php artisan migrate 
