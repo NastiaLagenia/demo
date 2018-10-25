@@ -1,5 +1,8 @@
 @extends('layouts.base')
-
+@section('scripts')
+@parent
+<script src="{{asset('ckeditor/ckeditor.js')}}" ></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -14,13 +17,15 @@
                         </div>
                     @endif
 
-                    <form>
+<form method="post" action="{{asset('home')}}">
+{!!csrf_field()!!}
+
   <div class="form-group">
-    
     <label>Оставьте свой отзыв</label>
-	<p><textarea rows="10" cols="45" name="text" placeholder="Введите свой отзыв"></textarea></p>
-  </div>
-  <button type="submit" class="btn btn-default">Отправить</button>
+	<p><textarea rows="10" cols="105" name="body" class="ckeditor"></textarea></p>
+	 </div>
+    <button type="sumbit" value="отправить" name="send">Отправить</button>
+ 
 </form>
                 </div>
             </div>
