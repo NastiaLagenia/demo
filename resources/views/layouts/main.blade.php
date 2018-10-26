@@ -19,18 +19,41 @@
    <img id="logo" src="media/img/logo.png" />
   </header>
   
-  @include ('templates.topmenu')
+  <nav class="topmenu">
+   <a href="{{asset('/')}}">Главная</a>
+   <a href="{{asset('about')}}">О компании</a>
+   <a href="{{asset('service')}}">Услуги</a>
+   <a href="{{asset('#')}}">Товары</a>
+   <a href="{{asset('contact')}}">Контакты</a>
+	@guest
+		
+			<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>		
+			@if (Route::has('register'))
+				<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+			@endif
+	   
+	@else
+		
+			<a href="{{asset('home')}}">
+				{{ Auth::user()->name }} <span class="caret"></span>
+			</a>
+
+
+				<a class="dropdown-item" href="{{ route('logout') }}"
+				   onclick="event.preventDefault();
+								 document.getElementById('logout-form').submit();">
+					{{ __('Logout') }}
+				</a>
+
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+					@csrf
+				</form>		
+	@endguest
+  </nav> 
   <div>
    <div>
     <div class="col-md-2">
-	 @foreach($v_catalogs as $one)
-	 <a href="{{asset('catalog/'.$one->id )}}" class="btn btn-default btn-block">{{$one->name}}</a>
-	 @endforeach
-	 <!--<a href="{{asset('#')}}" class="btn btn-default btn-block">Разработка</a>
-	 <a href="{{asset('#')}}" class="btn btn-success btn-block">Продвижение</a>-->
-	 
-	 <a href="{{asset('feedback')}}" class="btn btn-primary btn-block">Отзывы</a>
-	 
+    test!!!!!
 	</div>
 	
 	<div class="col-md-8">
