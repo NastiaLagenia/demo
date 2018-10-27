@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 25 2018 г., 16:32
+-- Время создания: Окт 27 2018 г., 14:44
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -21,6 +21,60 @@ SET time_zone = "+00:00";
 --
 -- База данных: `demo`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `catalogs`
+--
+
+CREATE TABLE `catalogs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `picture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `vip` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `catalogs`
+--
+
+INSERT INTO `catalogs` (`id`, `name`, `body`, `picture`, `parent_id`, `vip`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'TV', 'Описание данного товара тут будет много текста TV', 'pictyre.png', 0, 0, 0, NULL, NULL),
+(2, 'laptop', 'Описание данного товара тут будет много текста laptop', 'pictyre.png', 0, 0, 0, NULL, NULL),
+(7, 'ПК', 'Тут будет описание товара ПК', 'pictyre3.png', 0, 0, 0, NULL, NULL),
+(8, 'СД', 'Описание', 'pictyre.png', 0, 0, 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `body`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'TV', '<p>тут будет описание категории, много текста</p>', '2018-10-27 06:03:29', '2018-10-27 06:03:29', NULL),
+(2, 'Новости как категории могут быть', '<p>тут должно быть много текста новостей</p>', '2018-10-27 06:04:02', '2018-10-27 06:04:02', NULL),
+(3, 'Еще категория', '<p>много текста, категория , много текста в категории</p>', '2018-10-27 06:04:39', '2018-10-27 06:04:39', NULL),
+(4, 'Еще категория 2', '<p>много много текста в категории</p>', '2018-10-27 06:05:24', '2018-10-27 06:05:24', NULL),
+(5, 'Default category', 'HTML Text', '2018-10-27 09:35:08', '2018-10-27 09:35:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -75,6 +129,53 @@ INSERT INTO `maintexts` (`id`, `name`, `body`, `url`, `type`, `created_at`, `upd
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `position` int(11) DEFAULT NULL,
+  `menu_type` int(11) NOT NULL DEFAULT '1',
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `menus`
+--
+
+INSERT INTO `menus` (`id`, `position`, `menu_type`, `icon`, `name`, `title`, `parent_id`, `created_at`, `updated_at`) VALUES
+(1, NULL, 0, NULL, 'User', 'User', NULL, NULL, NULL),
+(2, NULL, 0, NULL, 'Role', 'Role', NULL, NULL, NULL),
+(3, 0, 1, 'fa-database', 'Category', 'Categories', NULL, '2018-10-27 06:02:24', '2018-10-27 06:02:24'),
+(4, 0, 1, 'fa-database', 'Product', 'Products', NULL, '2018-10-27 06:18:28', '2018-10-27 06:18:28');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `menu_role`
+--
+
+CREATE TABLE `menu_role` (
+  `menu_id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `menu_role`
+--
+
+INSERT INTO `menu_role` (`menu_id`, `role_id`) VALUES
+(3, 1),
+(4, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `migrations`
 --
 
@@ -92,7 +193,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2018_10_25_121851_create_maintexts_table', 2),
-(4, '2018_10_25_145118_create_feedback_table', 3);
+(4, '2018_10_25_145118_create_feedback_table', 3),
+(5, '2018_10_26_154535_create_catalogs_table', 4),
+(6, '2015_10_10_000000_create_menus_table', 5),
+(7, '2015_10_10_000000_create_roles_table', 5),
+(8, '2015_10_10_000000_update_users_table', 5),
+(9, '2015_12_11_000000_create_users_logs_table', 5),
+(10, '2016_03_14_000000_update_menus_table', 5),
+(11, '2018_10_27_090224_create_category_table', 6),
+(12, '2018_10_27_091828_create_product_table', 7);
 
 -- --------------------------------------------------------
 
@@ -109,11 +218,64 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `product`
+--
+
+CREATE TABLE `product` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `body`, `price`, `picture`, `category_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Телевизор Lg', '<p>Описание телевизора LG</p>', '123', '1540621281-Снимок экрана (1).png', 1, 0, '2018-10-27 06:21:24', '2018-10-27 06:21:24', NULL),
+(2, 'laptop sony', '<p>Описание laptop sony</p>', '345', '1540621351-Снимок экрана (1).png', 3, 0, '2018-10-27 06:22:33', '2018-10-27 06:22:33', NULL),
+(3, 'Новость 1', '<p>Тут много текста новостей</p>', NULL, '1540622597-3808357.JPG', 2, 0, '2018-10-27 06:24:46', '2018-10-27 06:43:17', NULL),
+(4, 'Новость 2', '<p>кегнкеапго ангег еанеан апрпвов</p>', NULL, '1540622606-smeh-18.png', 2, 0, '2018-10-27 06:36:32', '2018-10-27 06:43:26', NULL),
+(5, 'Новый2', '<p>апвапрварва</p>', '1234', NULL, 4, 0, '2018-10-27 08:24:03', '2018-10-27 08:24:03', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `roles`
+--
+
+INSERT INTO `roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', '2018-10-27 05:48:07', '2018-10-27 05:48:07'),
+(2, 'User', '2018-10-27 05:48:07', '2018-10-27 05:48:07'),
+(3, 'Модератор', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
@@ -127,13 +289,72 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Nastia', 'm@mail.ru', NULL, '$2y$10$GA84ZZ60skwpeanVZxIIOeRWexLDCL/X/iAIzzIG2azfa1b9UVFKW', 'gJzgm8esBbathrmh2Qp7MY2fSmMlkU4JpdBKyLL5BvFFjw0yvr7pHLDqo2yq', '2018-10-25 07:42:55', '2018-10-25 07:42:55'),
-(2, 'new', 'm1@mail.ru', NULL, '$2y$10$3ZiwutOPnMYYZi.rRfqVCeo2uNknuvMgrC66OVba14hcIE9R.2MeG', 'FlgEM0JcHgmUld4y0CQ6yQUzNt3MSOZkDReqJoo3pMWTTfIKDht6KxiT2kD6', '2018-10-25 08:14:34', '2018-10-25 08:14:34');
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Nastia', 'm@mail.ru', NULL, '$2y$10$GA84ZZ60skwpeanVZxIIOeRWexLDCL/X/iAIzzIG2azfa1b9UVFKW', '8Kxqd2ZaTkXre2g4RKOqxqQFPxBmG8VZpwo5JmnenHr5pQyte73ZGHPu3eWs', '2018-10-25 07:42:55', '2018-10-25 07:42:55'),
+(2, NULL, 'new', 'm1@mail.ru', NULL, '$2y$10$3ZiwutOPnMYYZi.rRfqVCeo2uNknuvMgrC66OVba14hcIE9R.2MeG', '0VzXU8Gy1HMpqGW1MdzTzIpZV7OBBR4x6XPeW8BhoIv9peSoXmlAyQ2gBy0g', '2018-10-25 08:14:34', '2018-10-25 08:14:34'),
+(3, 1, 'Demchenko', 'NastiaLagenia@mail.ru', NULL, '$2y$10$MorvFdIitxudr8ptII8LjOPhtqw6P4bSjAu.izEMItcQujWxu3eAW', 'Xu67XvLOPrK8zTztMncsyICzKFb9L3ATJBwXPTqXcJSMTGgmQDgb4NfbTDON', '2018-10-27 05:49:40', '2018-10-27 05:49:40'),
+(4, NULL, '123456', 'm123456@mail.ru', NULL, '$2y$10$LnDY.CZ0VjlS9U7BoSCQKOHgjgQxwCHqMyYNOvjAZr771jrns3mq6', 'g88kLzjB2iX7LKEPVsX4o4kOtDeZwK00ntAVc00vlYhsw75nYZlAifnOb08p', '2018-10-27 10:41:27', '2018-10-27 10:41:27');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users_logs`
+--
+
+CREATE TABLE `users_logs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `action_model` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `action_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `users_logs`
+--
+
+INSERT INTO `users_logs` (`id`, `user_id`, `action`, `action_model`, `action_id`, `created_at`, `updated_at`) VALUES
+(1, 3, 'created', 'category', 1, '2018-10-27 06:03:29', '2018-10-27 06:03:29'),
+(2, 3, 'created', 'category', 2, '2018-10-27 06:04:02', '2018-10-27 06:04:02'),
+(3, 3, 'created', 'category', 3, '2018-10-27 06:04:39', '2018-10-27 06:04:39'),
+(4, 3, 'created', 'category', 4, '2018-10-27 06:05:24', '2018-10-27 06:05:24'),
+(5, 3, 'created', 'product', 1, '2018-10-27 06:21:24', '2018-10-27 06:21:24'),
+(6, 3, 'created', 'product', 2, '2018-10-27 06:22:33', '2018-10-27 06:22:33'),
+(7, 3, 'created', 'product', 3, '2018-10-27 06:24:46', '2018-10-27 06:24:46'),
+(8, 3, 'created', 'product', 4, '2018-10-27 06:36:32', '2018-10-27 06:36:32'),
+(9, 3, 'updated', 'product', 4, '2018-10-27 06:37:07', '2018-10-27 06:37:07'),
+(10, 3, 'updated', 'product', 3, '2018-10-27 06:39:19', '2018-10-27 06:39:19'),
+(11, 3, 'updated', 'product', 3, '2018-10-27 06:43:17', '2018-10-27 06:43:17'),
+(12, 3, 'updated', 'product', 4, '2018-10-27 06:43:26', '2018-10-27 06:43:26'),
+(13, 3, 'updated', 'product', 2, '2018-10-27 08:22:56', '2018-10-27 08:22:56'),
+(14, 3, 'updated', 'product', 2, '2018-10-27 08:23:18', '2018-10-27 08:23:18'),
+(15, 3, 'created', 'product', 5, '2018-10-27 08:24:03', '2018-10-27 08:24:03'),
+(16, 3, 'updated', 'users', 3, '2018-10-27 10:01:06', '2018-10-27 10:01:06'),
+(17, 3, 'updated', 'users', 3, '2018-10-27 10:09:56', '2018-10-27 10:09:56'),
+(18, 3, 'updated', 'users', 3, '2018-10-27 10:29:10', '2018-10-27 10:29:10'),
+(19, 3, 'updated', 'users', 3, '2018-10-27 10:32:54', '2018-10-27 10:32:54'),
+(20, 4, 'updated', 'users', 4, '2018-10-27 10:41:30', '2018-10-27 10:41:30'),
+(21, 4, 'updated', 'users', 4, '2018-10-27 10:43:43', '2018-10-27 10:43:43'),
+(22, 1, 'updated', 'users', 1, '2018-10-27 10:59:54', '2018-10-27 10:59:54'),
+(23, 3, 'updated', 'users', 3, '2018-10-27 11:02:08', '2018-10-27 11:02:08');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `catalogs`
+--
+ALTER TABLE `catalogs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `feedback`
@@ -148,6 +369,21 @@ ALTER TABLE `maintexts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `menus_name_unique` (`name`);
+
+--
+-- Индексы таблицы `menu_role`
+--
+ALTER TABLE `menu_role`
+  ADD UNIQUE KEY `menu_role_menu_id_role_id_unique` (`menu_id`,`role_id`),
+  ADD KEY `menu_role_menu_id_index` (`menu_id`),
+  ADD KEY `menu_role_role_id_index` (`role_id`);
+
+--
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
@@ -160,6 +396,18 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Индексы таблицы `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -167,8 +415,26 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Индексы таблицы `users_logs`
+--
+ALTER TABLE `users_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `catalogs`
+--
+ALTER TABLE `catalogs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT для таблицы `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `feedback`
@@ -183,16 +449,51 @@ ALTER TABLE `maintexts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT для таблицы `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT для таблицы `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT для таблицы `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `users_logs`
+--
+ALTER TABLE `users_logs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `menu_role`
+--
+ALTER TABLE `menu_role`
+  ADD CONSTRAINT `menu_role_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -2,7 +2,7 @@
    <a href="{{asset('/')}}">Главная</a>
    <a href="{{asset('about')}}">О компании</a>
    <a href="{{asset('service')}}">Услуги</a>
-   <a href="{{asset('#')}}">Товары</a>
+   <a href="{{asset('categories')}}">Товары</a>
    <a href="{{asset('contact')}}">Контакты</a>
 	@guest
 		

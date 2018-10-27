@@ -43,7 +43,11 @@ body{
 	padding-top:50px;
 	padding-bottom:50px;
 	background: Silver;
-	color:SpringGreen;
+	color:SpringGreen;	
+}
+.product{
+	float:left;
+	margin-right: 10px;
 }
 @media screen and (max-width: 600px){
 	#header{

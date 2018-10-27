@@ -14,7 +14,7 @@ class MainServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       View::composer('*', 'App\Providers\ViewComposers\SizeComposer');
+       View::composer(['layouts.base', 'layouts.main'], 'App\Providers\ViewComposers\SizeComposer');
     }
 
     /**
