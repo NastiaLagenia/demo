@@ -12,7 +12,7 @@
 - cd domaims 
 - git clone https://github.com/NastiaLagenia/demo.git
 - composer self-update
-- composer insert
+- composer install
 - создать файл .env из .env example 
 - перезапустить сервер 
 - HTTP://demo 
