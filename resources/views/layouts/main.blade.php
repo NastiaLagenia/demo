@@ -11,6 +11,8 @@
   @section('style')
   @show  
   @section('scripts')
+  <script src="{{asset('js/app.js')}}"></script>
+  <script src="{{asset('js/test.js')}}"></script>
   @show
  </head>
  <body>

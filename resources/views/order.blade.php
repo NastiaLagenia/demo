@@ -1,81 +1,20 @@
- @extends('layouts.base')
- @section('scripts')
- @parent
+@extends('layouts.base')
+@section('scripts')
+@parent
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('js/order.js')}}"></script>
-
 @endsection
 
-
+ 
  @section('content')
- <h2>Моя Корзина</h2>
-	 <div class="maintext">	
-
-<form method="POST" action="{{asset('order')}}">
-@csrf	 
-     <table class="table table-borderd table-striped" width='100%'	>
-	  <tr>
-	   <th>Изображение</th>
-	   <th>Название</th>
-	   <th>Цена, руб.</th>
-	   <th>Количество</th>
-	   <th>Сумма</th>
-	   <th>Действие</th>
-	  </tr>
-	  @php
-	     $counts=0;
-		 $itog=0;
-	   @endphp
-	  @foreach($arr as $key=>$value)
-	   @php
-	     $count=$value*$products[$key]->price;
-		 $counts+=$value;
-		 $itog+=$count;
-	   @endphp
-	    <tr>
-		  <td>
-		    @if($products[$key]->picture)
-		    <img class="product" src="{{asset('uploads/thumb/'.$products[$key]->picture)}}"/>
-	        @else 
-		   <img class="product" src="{{asset('media/img/no_foto.jpg')}}" />
-	       @endif 
-		  </td>	
-          <td>{{$products[$key]->name}}</td>		
-          <td>
-		  <span id="price_{{$key}}">
-		  {{$products[$key]->price}}
-		  </span>
-		  </td>		
-          <td>
-		  <input type="number" name="{{$key}}" data-id="{{$key}}" min=0 max=100 value="{{$value}}" class="count"/>
-		  </td>		
-          <td><span id="count_{{$key}}">
-		  {{$count}}
-		  </span>
-		  </td>		
-          <td><a href="{{asset('basket/dell/'.$key)}}" data-id="{{$key}}" &times>Delete</a></td>				  
-	    </tr>
-	  @endforeach
-	  
-	  
-	  <tr>
-	    <th colspan="3">Итого</th>
-		<td>{{$counts}}</td>
-		<td>{{$itog}}</td>
-		<td><a href="{{asset('basket/clear/')}}">Delete All</a></td>		
-	  </tr>
-	  
-     </table>
-     <div class="col-md-10" ></div>
-	 <div class="col-md-2">
-	 <button type="button" class="btn btn-primary " id="ord"  >Перейти к оформлению заказа</button>
-	  </br>
-	  </div>
-	  
-	  <div id="of" style="display: none">
-	  	 <div class="col-md-12">      
+ <h2>Оформить заказ</h2>
+	 <div class="maintext">
+     <br/>
+	 
+	 <div class="col-md-6">      
 					<div class="card-body">
-						  </br>
+                                <form method="POST" action="">
+                                    @csrf
+
                                     <div class="form-group row">
                                         <label for="name" class="col-md-2 col-form-label text-md-right">ФИО<i>*</i></label>
 
@@ -125,44 +64,45 @@
                                             <input id="phone" type="text" class="form-control" name="phone" required>
                                         </div>
                                     </div>
-									
-									<div class="form-group row">
-                                        <label for="exampleFormControlSelect1" class="col-md-2 col-form-label text-md-right">Cпособ доставки</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control" id="exampleFormControlSelect1">
-											  <option>Доставка курьером</option>
-											  <option>Самовывоз</option>
-											  <option>Доставка почтой по РБ</option>
-											</select>
-                                        </div>																				
-                                    </div>
-									<div class="form-group row">
-                                        <label for="exampleFormControlSelect1" class="col-md-2 col-form-label text-md-right">Cпособ оплаты</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control" id="exampleFormControlSelect1">
-											  <option>Оплата наличными курьеру или при самовывозе</option>
-											  <option>Предоплата через ЕРИП</option>
-											  <option>Оплата по карте </option>
-											</select>
-                                        </div>																				
-                                    </div>
+
+
                                     <div class="form-group row" >
                                     	<label for="" class="col-md-2 col-form-label text-md-right">Комментарий к заказу</label>
                                         <div class="col-md-10">
                                     	<textarea rows="10" cols="103" name="body"  class="ckeditor"></textarea>
                                     </div>
                                     </div>
-                                
+                                </form>
                         </div>
                     </div>
-           
+                    <div class="col-md-6"> 
+                        <form method="POST" action="">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1" class="col-md-12 col-form-label text-md-right">Выберите способ доставки</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                  <option>Доставка курьером</option>
+                                  <option>Самовывоз</option>
+                                  <option>Доставка почтой по РБ</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1" class="col-md-12 col-form-label text-md-right">Выберите способ оплаты</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                  <option>Оплата наличными курьеру или при самовывозе</option>
+                                  <option>Предоплата через ЕРИП</option>
+                                  <option>Оплата по карте </option>
+                                </select>
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
 	  
+      <div class="col-md-12">
+	   <a href="{{asset('basket')}}" class="btn btn--primary"}>вернуться в корзину</a>
 	  </div>
-	  <div class="col-md-10" ></div>
-	 <div class="col-md-2" id="ord">
-	  <button type="submit" class="btn btn-primary"}>Подтвердить</button>
-	  </br>
-	  </div>  
-	  </form>
 	 </div>
 @endsection
