@@ -10,6 +10,19 @@
  @section('content')
  <h2>Моя Корзина</h2>
 	 <div class="maintext">	
+@if (count($errors)>0)
+	<div class="alter-danger">
+<strong>Whoops!</strong>Найдены следующие ошибки.<br><br>
+<ul>
+@foreach($errors->all() as $error)
+<li>
+{{$error}}
+</li>
+@endforeach
+</ul>
+</div>
+@endif
+
 
 <form method="POST" action="{{asset('order')}}">
 @csrf	 
@@ -56,8 +69,7 @@
           <td><a href="{{asset('basket/dell/'.$key)}}" data-id="{{$key}}" &times>Delete</a></td>				  
 	    </tr>
 	  @endforeach
-	  
-	  
+	  	  
 	  <tr>
 	    <th colspan="3">Итого</th>
 		<td>{{$counts}}</td>
@@ -71,20 +83,26 @@
 	 <button type="button" class="btn btn-primary " id="ord"  >Перейти к оформлению заказа</button>
 	  </br>
 	  </div>
+<script>
+	 $(function(){
+		 $('#of').css('display','block');
+	 })
+	</script>	  
 	  
 	  <div id="of" style="display: none">
 	  	 <div class="col-md-12">      
 					<div class="card-body">
 						  </br>
                                     <div class="form-group row">
-                                        <label for="name" class="col-md-2 col-form-label text-md-right">ФИО<i>*</i></label>
+                                        <label for="fio" class="col-md-2 col-form-label text-md-right">ФИО<i>*</i></label>
 
                                         <div class="col-md-10">
-                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
-                                            @if ($errors->has('name'))
+                                            <input id="fio" type="text" class="form-control{{ $errors->has('fio') ? ' is-invalid' : '' }}" name="fio" value="{{ old('fio') }}" required autofocus>
+
+                                            @if ($errors->has('fio'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('name') }}</strong>
+                                                    <strong>{{ $errors->first('fio') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -108,11 +126,11 @@
                                         <label for="address" class="col-md-2 col-form-label text-md-right">Адрес<i>*</i></label>
 
                                         <div class="col-md-10">
-                                            <input id="address" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="address" required>
+                                            <input id="adress" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="adress" required>
 
-                                            @if ($errors->has('address'))
+                                            @if ($errors->has('adress'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('address') }}</strong>
+                                                    <strong>{{ $errors->first('adress') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -129,7 +147,7 @@
 									<div class="form-group row">
                                         <label for="exampleFormControlSelect1" class="col-md-2 col-form-label text-md-right">Cпособ доставки</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="exampleFormControlSelect1">
+                                            <select name="type" class="form-control" id="exampleFormControlSelect1" >
 											  <option>Доставка курьером</option>
 											  <option>Самовывоз</option>
 											  <option>Доставка почтой по РБ</option>
@@ -139,7 +157,7 @@
 									<div class="form-group row">
                                         <label for="exampleFormControlSelect1" class="col-md-2 col-form-label text-md-right">Cпособ оплаты</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="exampleFormControlSelect1">
+                                            <select class="form-control" id="exampleFormControlSelect1" name="pay">>
 											  <option>Оплата наличными курьеру или при самовывозе</option>
 											  <option>Предоплата через ЕРИП</option>
 											  <option>Оплата по карте </option>
