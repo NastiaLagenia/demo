@@ -32,5 +32,6 @@ Route::get('basket/clear', 'BasketController@getClear');
 Route::get('order', 'BasketController@index');
 Route::post('order', 'OrderController@postOrder'); 
 Route::get('admin/order/one/{id}', 'Admin\OrderController@getIndex');
+Route::post('ajax', 'AjaxController@postIndex');
 
 Route::get('{url}', 'StaticController@getIndex'); /*всегда последний!!!*/

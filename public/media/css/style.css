@@ -49,6 +49,46 @@ body{
 	float:left;
 	margin-right: 10px;
 }
+.modal-window{
+	position:fixed;
+	top:100px;
+	left:50%;
+	width:600px;
+	margin-left:-300px;
+	padding:10px;
+	border: solid 1px #ccc;
+	background-color:green;
+	border-radius: 6px;
+	box-shadow:1px 1px 1px black;
+	z-index:99;
+	
+}
+.modal-close{
+	position:absolute;
+	top: 1px;
+	right:1px;
+	margin:0;
+	padding:0;
+	text-decoration:none;
+	color: red;
+	font-size:18px;
+}
+.modal-close:before{
+	position:relative;
+	top:-1px;
+	content:"Close";
+	font-size:12px;
+}
+#overlay{
+  background:black;
+  opacity: 0.7;
+  position:fixed;
+  height:100%;
+  width:100%;
+  left:0;
+  top:0;
+}
+
 @media screen and (max-width: 600px){
 	#header{
 		100px;
