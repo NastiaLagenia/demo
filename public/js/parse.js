@@ -1,4 +1,4 @@
-$(function(){	
+﻿$(function(){	
 		$('.parse').click(function(){
         var url=$('#ali').val();
 		var id=$(this).attr('data-id');
